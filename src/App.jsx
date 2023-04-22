@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import StockOverviewPage from "./pages/StockOverviewPage";
 import StockDetailPage from "./pages/StockDetailPage";
 // import './App.css'
@@ -16,6 +16,7 @@ function App() {
 						path="/detail/:symbol"
 						element={<StockDetailPage />}
 					/>
+                    <Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</BrowserRouter>
 		</>
