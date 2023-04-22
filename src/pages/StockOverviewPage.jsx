@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+
+import Autocomplete from "../components/Autocomplete";
+import StockList from "../components/StockList";
 
 const StockOverviewPage = () => {
-  return (
-    <div>stockOverviewPage</div>
-  )
-}
+	return (
+		<>
+			<Autocomplete />
+			<div>stockOverviewPage</div>
+			<StockList />
+		</>
+	);
+};
 
-export default StockOverviewPage
+export default StockOverviewPage;
