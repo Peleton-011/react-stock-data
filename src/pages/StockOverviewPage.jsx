@@ -1,9 +1,9 @@
 import React from 'react'
 
-const stockOverviewPage = () => {
+const StockOverviewPage = () => {
   return (
     <div>stockOverviewPage</div>
   )
 }
 
-export default stockOverviewPage
+export default StockOverviewPage
