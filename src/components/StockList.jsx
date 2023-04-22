@@ -5,9 +5,12 @@ import finnHub from "../apis/finnHub";
 
 const fetchData = async (symbol) => {
 	try {
-    	const res = await finnHub.get(`/quote?symbol=${symbol}`);
-        return res.data;
-    } catch (error) {
+		const res = await finnHub.get("/quote", {
+			params: { symbol },
+		});
+		console.log(res.data);
+		return res.data;
+	} catch (error) {
 		console.warn("Failed to fetch data");
 		console.warn(error);
 	}
