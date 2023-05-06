@@ -32,13 +32,13 @@ const Autocomplete = () => {
 	const getDropdown = () => (
 		<ul className={`dropdown-menu ${search ? "show" : null}`}>
 			{results.map((result) => (
-				<li key={result.displaySymbol}>{result.displaySymbol}</li>
+				<li key={result.displaySymbol} className="dropdown-item">{result.description} <span style={{textAlign: "right"}}>({result.symbol})</span></li>
 			))}
 		</ul>
 	);
 
 	return (
-		<div className="w-50 p-5 rounded mx-auto">
+		<div className="w-50% p-5 rounded mx-auto">
 			<div className="form-floating dropdown">
 				<input
 					type="text"
