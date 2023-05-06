@@ -17,17 +17,25 @@ const Autocomplete = () => {
 					},
 				});
 				if (isMounted) setResults(res.data.result);
-            } catch (err) {
+			} catch (err) {
 				console.warn("Failed to fetch query results");
 				console.warn(err);
 			}
 		};
 		if (search.length > 0) {
-            fetchData()
-        } else {
-            setResults([])
-        };
+			fetchData();
+		} else {
+			setResults([]);
+		}
 	}, [search]);
+
+	const getDropdown = () => (
+		<ul className={`dropdown-menu ${search ? "show" : null}`}>
+			{results.map((result) => (
+				<li key={result.displaySymbol}>{result.displaySymbol}</li>
+			))}
+		</ul>
+	);
 
 	return (
 		<div className="w-50 p-5 rounded mx-auto">
@@ -43,11 +51,7 @@ const Autocomplete = () => {
 					value={search}
 				/>
 				<label htmlFor="search">Search</label>
-				<ul className="dropdown-menu show">
-					{results.map(result => (
-                        <li key={result.displaySymbol}>{result.displaySymbol}</li>   
-                    ))}
-				</ul>
+                {getDropdown()}
 			</div>
 		</div>
 	);
