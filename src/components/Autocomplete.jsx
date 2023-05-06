@@ -22,8 +22,13 @@ const Autocomplete = () => {
 				console.warn(err);
 			}
 		};
-		if (search.length > 0) {fetchData()} else {setResults([])};
+		if (search.length > 0) {
+            fetchData()
+        } else {
+            setResults([])
+        };
 	}, [search]);
+
 	return (
 		<div className="w-50 p-5 rounded mx-auto">
 			<div className="form-floating dropdown">
@@ -38,9 +43,10 @@ const Autocomplete = () => {
 					value={search}
 				/>
 				<label htmlFor="search">Search</label>
-				<ul className="dropdown-menu">
-					<li>testStoc 1</li>
-					<li>test stoc 2</li>
+				<ul className="dropdown-menu show">
+					{results.map(result => (
+                        <li key={result.displaySymbol}>{result.displaySymbol}</li>   
+                    ))}
 				</ul>
 			</div>
 		</div>
