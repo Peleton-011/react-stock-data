@@ -48,7 +48,16 @@ const StockData = ({ symbol }) => {
 			{stockData ? (
 				<div className="row border bg-white rounded shadow-sm p-4 mt-5">
 					{dataFormat.map((col, colIndex) => (
-						<div className="col" key={colIndex}>
+						<div
+							// className="col"
+							key={colIndex}
+							style={{
+								display: "grid",
+								gridTemplateColumns:
+									"repeat(auto-fill, minmax(150px, 30%))",
+                                justifyContent: "space-between",
+							}}
+						>
 							{col.map((pair, rowIndex) => (
 								<div key={rowIndex}>
 									<span className="fw-bold">{pair[0]}:</span>
