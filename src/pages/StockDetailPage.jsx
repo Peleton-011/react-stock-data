@@ -16,13 +16,32 @@ const StockDetailPage = () => {
 	const [isCandleStick, setIsCandleStick] = useState(false);
 
 	const formatData = (data) => {
-		const prices = data.c;
+		const to2decimals = (number) => Math.floor(number * 100) / 100;
 		const timestamps = data.t;
+		const closingPrices = data.c;
 
-		const result = prices.map((price, index) => {
+		if (!isCandleStick) {
+			const result = closingPrices.map((price, index) => {
+				return {
+					x: timestamps[index] * 1000,
+					y: to2decimals(price),
+				};
+			});
+			return result;
+		}
+		const openPrices = data.o;
+		const highPrices = data.h;
+		const lowPrices = data.l;
+
+		const result = timestamps.map((timestamp, index) => {
 			return {
-				x: timestamps[index] * 1000,
-				y: Math.floor(price * 100) / 100,
+				x: timestamp * 1000,
+				y: [
+					to2decimals(openPrices[index]),
+					highPrices[index],
+					lowPrices[index],
+					to2decimals(closingPrices[index]),
+				],
 			};
 		});
 		return result;
@@ -79,11 +98,17 @@ const StockDetailPage = () => {
 			}
 		};
 		fetchData();
-	}, [symbol]);
+	}, [symbol, isCandleStick]);
 
 	const getToggle = () => {
 		return (
-			<div style={{ float: "right", display: "flex", alignItems: "center" }}>
+			<div
+				style={{
+					float: "right",
+					display: "flex",
+					alignItems: "center",
+				}}
+			>
 				<label className="switch">
 					<input
 						type="checkbox"
@@ -93,7 +118,7 @@ const StockDetailPage = () => {
 					/>
 					<span className="slider"></span>
 				</label>
-				<label >Candlestick view</label>
+				<label>Candlestick view</label>
 			</div>
 		);
 	};
