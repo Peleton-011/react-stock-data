@@ -8,15 +8,16 @@ import finnHub from "../apis/finnHub";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
+	const [chartData, setChartData] = useState();
 
 	const formatData = (data) => {
 		const prices = data.c;
 		const timestamps = data.t;
 
 		const result = prices.map((price, index) => {
-			return { x: timestamps[index], y: price };
+			return { x: timestamps[index] * 1000, y: price };
 		});
-        return result;
+		return result;
 	};
 
 	useEffect(() => {
@@ -39,7 +40,7 @@ const StockDetailPage = () => {
 					break;
 			}
 
-			const getRes = (span, res) => {
+			const getRes = async (span, res) => {
 				return finnHub.get("/stock/candle", {
 					params: {
 						symbol: symbol,
@@ -56,12 +57,19 @@ const StockDetailPage = () => {
 					getRes(yearInSeconds, "W"), //(use "D" for daily datapoints)
 				]);
 
-				return responses;
+				const [day, week, year] = responses.map((res) =>
+					formatData(res.data)
+				);
+
+				setChartData({
+					day,
+					week,
+					year,
+				});
 			} catch (error) {
 				console.warn(error.message);
 			}
 		};
-		console.log(fetchData().map((res) => formatData(res.data)));
 	}, []);
 
 	return <div>stockDetailPage for {symbol}</div>;
