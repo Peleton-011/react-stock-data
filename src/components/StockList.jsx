@@ -76,6 +76,14 @@ const StockList = () => {
 		nav(`detail/${symbol}`);
 	};
 	// fetchAllData(watchList);
+
+	const getRemoveButton = () => {
+		return (
+			<button className="btn btn-danger btn-sn ml-3 d-inline-block delete-button">
+				Delete
+			</button>
+		);
+	};
 	return (
 		<>
 			<table className="table hover mt-5">
@@ -110,7 +118,10 @@ const StockList = () => {
 							<td>{data.h}</td>
 							<td>{data.l}</td>
 							<td>{data.o}</td>
-							<td>{data.pc}</td>
+							<td>
+								{data.pc}
+								{getRemoveButton()}
+							</td>
 						</tr>
 					))}
 				</tbody>
