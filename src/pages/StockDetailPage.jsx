@@ -71,6 +71,7 @@ const StockDetailPage = () => {
 				console.warn(error.message);
 			}
 		};
+        fetchData();
 	}, [symbol]);
 
 	return <div>{chartData && <StockChart />}</div>;
