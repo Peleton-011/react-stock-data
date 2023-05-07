@@ -8,6 +8,8 @@ import finnHub from "../apis/finnHub";
 import StockChart from "../components/StockChart";
 import StockData from "../components/StockData";
 
+import Loading from "../components/Loading";
+
 const StockDetailPage = () => {
 	const { symbol } = useParams();
 	const [chartData, setChartData] = useState();
@@ -86,7 +88,7 @@ const StockDetailPage = () => {
 					<StockData symbol={symbol} />
 				</div>
 			) : (
-				<div>Loading...</div>
+				<Loading />
 			)}
 		</>
 	);

@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import finnHub from "../apis/finnHub";
 
+import Loading from "./Loading";
+
 const StockData = ({ symbol }) => {
 	const [stockData, setStockData] = useState();
 	let isMounted = true;
@@ -77,7 +79,7 @@ const StockData = ({ symbol }) => {
 					))}
 				</div>
 			) : (
-				<div>Loading...</div>
+				<Loading />
 			)}
 		</>
 	);
