@@ -23,7 +23,17 @@ const StockChart = ({ chartData, symbol }) => {
 		}
 	};
 
+	const chartColor = (data) => {
+		const firstPrice = data[0].y;
+		const lastPrice = data[data.length - 1].y;
+
+		const isUpward = firstPrice < lastPrice;
+
+		return isUpward ? "#26C281" : "#ed3419";
+	};
+
 	const options = {
+		colors: [chartColor(getDataByTimeFormat())],
 		title: {
 			text: symbol,
 			align: "center",
