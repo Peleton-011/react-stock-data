@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from "react";
 import { WatchListContext } from "../context/watchlistContext";
 import finnHub from "../apis/finnHub";
 
+import { useNavigate } from "react-router-dom";
+
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 const fetchData = async (symbol) => {
@@ -23,7 +25,7 @@ const fetchAllData = async (symbols) => {
 				} catch (error) {
 					console.warn("Failed to fetch data for symbol ", symbol);
 					console.log(error.message);
-                    alert("This ticker is unavailable at the moment")
+					alert("This ticker is unavailable at the moment");
 				}
 				return { error: true };
 			})
@@ -48,6 +50,8 @@ const StockList = () => {
 
 	const { watchList } = useContext(WatchListContext);
 
+	const nav = useNavigate();
+
 	useEffect(() => {
 		let isMounted = true;
 		isMounted && fetchAllData(watchList).then((res) => setStocks(res));
@@ -67,6 +71,10 @@ const StockList = () => {
 		) : (
 			""
 		);
+
+	const handleStockSelect = (symbol) => {
+		nav(`detail/${symbol}`);
+	};
 	// fetchAllData(watchList);
 	return (
 		<>
@@ -85,7 +93,12 @@ const StockList = () => {
 				</thead>
 				<tbody>
 					{stocks.map(({ symbol: stock, data }) => (
-						<tr className="table-row" key={stock}>
+						<tr
+							className="table-row"
+							key={stock}
+							onClick={() => handleStockSelect(stock)}
+							style={{ cursor: "pointer" }}
+						>
 							<th>{stock}</th>
 							<td>{data.c}</td>
 							<td className={setColor(data.d)}>
