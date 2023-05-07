@@ -58,6 +58,14 @@ const StockData = ({ symbol }) => {
 										>
 											{stockData[pair[1]]}
 										</a>
+									) : pair[1] === "shareOutstanding" ||
+									  pair[1] === "marketCapitalization" ? (
+										<span style={{ float: "right" }}>
+											{Math.floor(
+												stockData[pair[1]] * 1000
+											) / 1000}
+											M
+										</span>
 									) : (
 										<span style={{ float: "right" }}>
 											{stockData[pair[1]]}
