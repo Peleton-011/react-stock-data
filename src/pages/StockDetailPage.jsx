@@ -74,7 +74,7 @@ const StockDetailPage = () => {
         fetchData();
 	}, [symbol]);
 
-	return <div>{chartData && <StockChart symbol={symbol} chartData={chartData} />}</div>;
+	return <div style={{width: "100%"}}>{chartData && <StockChart symbol={symbol} chartData={chartData} />}</div>;
 };
 
 export default StockDetailPage;
