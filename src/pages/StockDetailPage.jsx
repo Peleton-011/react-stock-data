@@ -16,7 +16,10 @@ const StockDetailPage = () => {
 		const timestamps = data.t;
 
 		const result = prices.map((price, index) => {
-			return { x: timestamps[index] * 1000, y: price };
+			return {
+				x: timestamps[index] * 1000,
+				y: Math.floor(price * 100) / 100,
+			};
 		});
 		return result;
 	};
@@ -71,10 +74,14 @@ const StockDetailPage = () => {
 				console.warn(error.message);
 			}
 		};
-        fetchData();
+		fetchData();
 	}, [symbol]);
 
-	return <div style={{width: "100%"}}>{chartData && <StockChart symbol={symbol} chartData={chartData} />}</div>;
+	return (
+		<div style={{ width: "100%" }}>
+			{chartData && <StockChart symbol={symbol} chartData={chartData} />}
+		</div>
+	);
 };
 
 export default StockDetailPage;
