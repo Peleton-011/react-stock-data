@@ -70,7 +70,7 @@ const StockDetailPage = () => {
 				console.warn(error.message);
 			}
 		};
-	}, []);
+	}, [symbol]);
 
 	return <div>stockDetailPage for {symbol}</div>;
 };
