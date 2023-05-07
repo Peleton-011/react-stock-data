@@ -30,9 +30,21 @@ const Autocomplete = () => {
 	}, [search]);
 
 	const getDropdown = () => (
-		<ul className={`dropdown-menu ${search ? "show" : null}`}>
+		<ul
+			className={`dropdown-menu ${search ? "show" : null}`}
+			style={{
+				height: "500px",
+				width: "100%",
+				overflowY: "scroll",
+				overflowX: "hidden",
+				cursor: "pointer",
+			}}
+		>
 			{results.map((result) => (
-				<li key={result.displaySymbol} className="dropdown-item">{result.description} <span style={{textAlign: "right"}}>({result.symbol})</span></li>
+				<li key={result.symbol} className="dropdown-item">
+					{result.description}{" "}
+					<span style={{ float: "right" }}>({result.symbol})</span>
+				</li>
 			))}
 		</ul>
 	);
@@ -51,7 +63,7 @@ const Autocomplete = () => {
 					value={search}
 				/>
 				<label htmlFor="search">Search</label>
-                {getDropdown()}
+				{getDropdown()}
 			</div>
 		</div>
 	);
