@@ -68,6 +68,8 @@ const StockData = ({ symbol }) => {
 		</div>
 	);
 
+    console.log(stockData)
+
 	return <>{stockData && getElem(stockData, dataFormat)}</>;
 };
 
