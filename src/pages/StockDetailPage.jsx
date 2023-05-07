@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import finnHub from "../apis/finnHub";
+import StockChart from "../components/StockChart";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
@@ -72,7 +73,7 @@ const StockDetailPage = () => {
 		};
 	}, [symbol]);
 
-	return <div>stockDetailPage for {symbol}</div>;
+	return <div>{chartData && <StockChart />}</div>;
 };
 
 export default StockDetailPage;
