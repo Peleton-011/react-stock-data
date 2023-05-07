@@ -58,12 +58,19 @@ const StockChart = ({ chartData, symbol }) => {
 	const getButton = (val) => (
 		<button
 			key={val}
-			className="btn btn-outline-primary"
+			className={"btn m-1 " + renderButtonSelect(val)}
 			onClick={() => setDateFormat(val)}
 		>
 			{val}
 		</button>
 	);
+
+	const renderButtonSelect = (button) => {
+		if (button === dateFormat) {
+			return "btn-primary";
+		}
+		return "btn-outline-primary";
+	};
 
 	return (
 		<section
