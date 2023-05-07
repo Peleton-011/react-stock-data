@@ -1,6 +1,7 @@
 import React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { WatchListContext } from "../context/watchlistContext";
 import finnHub from "../apis/finnHub";
 
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
@@ -20,7 +21,6 @@ const fetchAllData = async (symbols) => {
 			symbol: response.config.params.symbol,
 			data: response.data,
 		}));
-		console.log(finalRes);
 		return finalRes;
 	} catch (error) {
 		console.warn("Failed to fetch data");
@@ -30,7 +30,8 @@ const fetchAllData = async (symbols) => {
 
 const StockList = () => {
 	const [stocks, setStocks] = useState([]);
-	const [watchList, setWatchList] = useState(["MSFT", "AAPL", "AMZN"]);
+
+    const {watchList} = useContext(WatchListContext)
 
 	useEffect(() => {
 		let isMounted = true;
