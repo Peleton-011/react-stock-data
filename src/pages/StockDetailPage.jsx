@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 const StockDetailPage = () => {
 	const { symbol } = useParams();
 	const [chartData, setChartData] = useState();
+	const [isCandleStick, setIsCandleStick] = useState(false);
 
 	const formatData = (data) => {
 		const prices = data.c;
@@ -80,11 +81,33 @@ const StockDetailPage = () => {
 		fetchData();
 	}, [symbol]);
 
+	const getToggle = () => {
+		return (
+			<div style={{ float: "right", display: "flex", alignItems: "center" }}>
+				<label className="switch">
+					<input
+						type="checkbox"
+						onChange={(e) => {
+							setIsCandleStick(!e.target.checked);
+						}}
+					/>
+					<span className="slider"></span>
+				</label>
+				<label >Candlestick view</label>
+			</div>
+		);
+	};
+
 	return (
 		<>
 			{chartData ? (
 				<div style={{ width: "100%" }}>
-					<StockChart symbol={symbol} chartData={chartData} />
+					<StockChart
+						symbol={symbol}
+						chartData={chartData}
+						isCandleStick={isCandleStick}
+						getToggle={getToggle}
+					/>
 					<StockData symbol={symbol} />
 				</div>
 			) : (

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
-const StockChart = ({ chartData, symbol }) => {
+const StockChart = ({ chartData, symbol, getToggle, isCandleStick }) => {
 	const { day, week, year } = chartData;
 
 	const [dateFormat, setDateFormat] = useState("24h");
@@ -88,10 +88,19 @@ const StockChart = ({ chartData, symbol }) => {
 			className="mt-5 p-4 shadow-sn bg-white"
 		>
 			<Chart options={options} series={series} type="area" width="100%" />
-			<div>
-				{["24h", "7d", "1y"].map((val) => {
-					return getButton(val);
-				})}
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between",
+				}}
+			>
+				<div>
+					{["24h", "7d", "1y"].map((val) => {
+						return getButton(val);
+					})}
+				</div>
+				{getToggle()}
 			</div>
 		</section>
 	);
