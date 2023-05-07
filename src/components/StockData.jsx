@@ -7,23 +7,22 @@ import Loading from "./Loading";
 
 const StockData = ({ symbol }) => {
 	const [stockData, setStockData] = useState();
-	let isMounted = true;
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchData = () => {
 			try {
-				const res = await finnHub.get("/stock/profile2", {
-					params: { symbol },
-				});
-
-				if (isMounted) setStockData(res.data);
+				finnHub
+					.get("/stock/profile2", {
+						params: { symbol },
+					})
+					.then((res) => {
+						setStockData(res.data);
+						console.log(stockData);
+					});
 			} catch (error) {
 				console.warn(error.message);
 			}
 		};
 		fetchData();
-		return () => {
-			isMounted = false;
-		};
 	}, [symbol]);
 
 	const dataFormat = [
