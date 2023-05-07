@@ -35,7 +35,7 @@ const Autocomplete = () => {
 		<ul
 			className={`dropdown-menu ${search ? "show" : null}`}
 			style={{
-				height: "500px",
+				maxHeight: "500px",
 				width: "100%",
 				overflowY: "scroll",
 				overflowX: "hidden",
