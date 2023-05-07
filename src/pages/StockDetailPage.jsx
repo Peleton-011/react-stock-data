@@ -1,14 +1,24 @@
 import React from "react";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
 import finnHub from "../apis/finnHub";
-import { BsChatLeftText } from "react-icons/bs";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
+
+	const formatData = (data) => {
+		const prices = data.c;
+		const timestamps = data.t;
+
+		const result = prices.map((price, index) => {
+			return { x: timestamps[index], y: price };
+		});
+        return result;
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const date = new Date();
@@ -46,12 +56,12 @@ const StockDetailPage = () => {
 					getRes(yearInSeconds, "W"), //(use "D" for daily datapoints)
 				]);
 
-				console.log(responses);
+				return responses;
 			} catch (error) {
 				console.warn(error.message);
 			}
 		};
-		fetchData();
+		console.log(fetchData().map((res) => formatData(res.data)));
 	}, []);
 
 	return <div>stockDetailPage for {symbol}</div>;
