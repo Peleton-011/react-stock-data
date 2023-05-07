@@ -15,12 +15,13 @@
 }
 
 .delete-button {
-    visibility: hidden;
+    opacity: 0;
+    transition: opacity 250ms ease;
     float: inline-end;
 }
 
 *:hover  > * > .delete-button {
-    visibility: visible;
+    opacity: 1;
 }
 
 #root {
