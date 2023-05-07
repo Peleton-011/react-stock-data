@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<main className="container">
+	<main className="container" style={{width: "80vw"}}>
 		<React.StrictMode>
 			<App />
 		</React.StrictMode>

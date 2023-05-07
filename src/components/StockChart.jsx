@@ -84,10 +84,17 @@ const StockChart = ({ chartData, symbol, getToggle, isCandleStick }) => {
 
 	return (
 		<section
-			style={{ width: "100%" }}
+			style={{ width: "100%", height: "80%" }}
 			className="mt-5 p-4 shadow-sn bg-white"
 		>
-			<Chart options={options} series={series} type="area" width="100%" />
+			<Chart
+				options={options}
+				series={series}
+				type="area"
+				width="100%"
+				height="80%"
+				style={{ height: "80vh" }}
+			/>
 			<div
 				style={{
 					display: "flex",

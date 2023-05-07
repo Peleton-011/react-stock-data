@@ -16,7 +16,6 @@ const StockData = ({ symbol }) => {
 					})
 					.then((res) => {
 						setStockData(res.data);
-						console.log(stockData);
 					});
 			} catch (error) {
 				console.warn(error.message);
