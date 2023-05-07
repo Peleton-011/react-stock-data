@@ -113,7 +113,7 @@ const StockDetailPage = () => {
 					<input
 						type="checkbox"
 						onChange={(e) => {
-							setIsCandleStick(!e.target.checked);
+							setIsCandleStick(e.target.checked);
 						}}
 					/>
 					<span className="slider"></span>
@@ -125,12 +125,22 @@ const StockDetailPage = () => {
 
 	return (
 		<>
-			{chartData ? (
+			{chartData && isCandleStick ? (
 				<div style={{ width: "100%" }}>
 					<StockChart
+						type="candlestick"
 						symbol={symbol}
 						chartData={chartData}
-						isCandleStick={isCandleStick}
+						getToggle={getToggle}
+					/>
+					<StockData symbol={symbol} />
+				</div>
+			) : chartData && !isCandleStick ? (
+				<div style={{ width: "100%" }}>
+					<StockChart
+						type="area"
+						symbol={symbol}
+						chartData={chartData}
 						getToggle={getToggle}
 					/>
 					<StockData symbol={symbol} />

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
-const StockChart = ({ chartData, symbol, getToggle, isCandleStick }) => {
+const StockChart = ({ chartData, symbol, getToggle, type}) => {
 	const { day, week, year } = chartData;
 
 	const [dateFormat, setDateFormat] = useState("24h");
@@ -90,7 +90,7 @@ const StockChart = ({ chartData, symbol, getToggle, isCandleStick }) => {
 			<Chart
 				options={options}
 				series={series}
-				type="area"
+				type={type}
 				width="100%"
 				height="80%"
 				style={{ height: "80vh" }}
