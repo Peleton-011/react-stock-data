@@ -16,7 +16,7 @@ function App() {
 						path="/detail/:symbol"
 						element={<StockDetailPage />}
 					/>
-                    <Route path="*" element={<Navigate to="/" replace />} />
+					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</BrowserRouter>
 		</>

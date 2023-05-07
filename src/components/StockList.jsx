@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import finnHub from "../apis/finnHub";
 
-import {BsFillCaretDownFill, BsFillCaretUpFill} from "react-icons/bs"
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 const fetchData = async (symbol) => {
 	return finnHub.get("/quote", {
@@ -40,9 +40,17 @@ const StockList = () => {
 		};
 	}, []);
 
-    const setColor = (condition) => condition < 0 ? "text-danger" : (condition > 0 ? "text-success" : "")
+	const setColor = (condition) =>
+		condition < 0 ? "text-danger" : condition > 0 ? "text-success" : "";
 
-    const getIcon = (condition) => condition < 0 ? (<BsFillCaretDownFill />) : (condition > 0 ? (<BsFillCaretUpFill />) : "")
+	const getIcon = (condition) =>
+		condition < 0 ? (
+			<BsFillCaretDownFill />
+		) : condition > 0 ? (
+			<BsFillCaretUpFill />
+		) : (
+			""
+		);
 	// fetchAllData(watchList);
 	return (
 		<>
@@ -64,12 +72,16 @@ const StockList = () => {
 						<tr className="table-row" key={stock}>
 							<th>{stock}</th>
 							<td>{data.c}</td>
-							<td className={setColor(data.d)}>{data.d} {getIcon(data.d)}</td>
-							<td className={setColor(data.dp)}>{data.dp}% {getIcon(data.dp)}</td>
+							<td className={setColor(data.d)}>
+								{data.d} {getIcon(data.d)}
+							</td>
+							<td className={setColor(data.dp)}>
+								{data.dp}% {getIcon(data.dp)}
+							</td>
 							<td>{data.h}</td>
 							<td>{data.l}</td>
 							<td>{data.o}</td>
-							<td>{data.pc}</td>						
+							<td>{data.pc}</td>
 						</tr>
 					))}
 				</tbody>
