@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 import finnHub from "../apis/finnHub";
 import StockChart from "../components/StockChart";
+import StockData from "../components/StockData";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
@@ -78,9 +79,16 @@ const StockDetailPage = () => {
 	}, [symbol]);
 
 	return (
-		<div style={{ width: "100%" }}>
-			{chartData && <StockChart symbol={symbol} chartData={chartData} />}
-		</div>
+		<>
+			{chartData ? (
+				<div style={{ width: "100%" }}>
+					<StockChart symbol={symbol} chartData={chartData} />
+					<StockData symbol={symbol} />
+				</div>
+			) : (
+				<div>Loading...</div>
+			)}
+		</>
 	);
 };
 
