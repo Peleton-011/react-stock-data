@@ -46,7 +46,10 @@ const Autocomplete = () => {
 				<li
 					key={result.symbol}
 					className="dropdown-item"
-					onClick={() => addStock(result.symbol)}
+					onClick={() => {
+						addStock(result.symbol);
+						setSearch("");
+					}}
 				>
 					{result.description}{" "}
 					<span style={{ float: "right" }}>({result.symbol})</span>

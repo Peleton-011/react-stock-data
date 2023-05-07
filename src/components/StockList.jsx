@@ -7,6 +7,8 @@ import finnHub from "../apis/finnHub";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 const fetchData = async (symbol) => {
+	// console.log("Fetching data for symbol ", symbol)
+
 	return finnHub.get("/quote", {
 		params: { symbol },
 	});
@@ -14,17 +16,30 @@ const fetchData = async (symbol) => {
 const fetchAllData = async (symbols) => {
 	try {
 		const res = await Promise.all(
-			symbols.map(async (symbol) => await fetchData(symbol))
+			symbols.map(async (symbol) => {
+				try {
+					const res = await fetchData(symbol);
+					return res;
+				} catch (error) {
+					console.warn("Failed to fetch data for symbol ", symbol);
+					console.log(error.message);
+                    alert("This ticker is unavailable at the moment")
+				}
+				return { error: true };
+			})
 		);
 
-		const finalRes = res.map((response) => ({
-			symbol: response.config.params.symbol,
-			data: response.data,
-		}));
+		const finalRes = res
+			.filter((stock) => !stock.error)
+			.map((response) => ({
+				symbol: response.config.params.symbol,
+				data: response.data,
+			}));
+		// console.log(JSON.stringify(finalRes, null, 2));
 		return finalRes;
 	} catch (error) {
 		console.warn("Failed to fetch data");
-		console.warn(error);
+		console.warn(error.message);
 	}
 };
 
