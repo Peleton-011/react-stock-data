@@ -31,7 +31,7 @@ const fetchAllData = async (symbols) => {
 const StockList = () => {
 	const [stocks, setStocks] = useState([]);
 
-    const {watchList} = useContext(WatchListContext)
+	const { watchList } = useContext(WatchListContext);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -39,7 +39,7 @@ const StockList = () => {
 		return () => {
 			isMounted = false;
 		};
-	}, []);
+	}, [watchList]);
 
 	const setColor = (condition) =>
 		condition < 0 ? "text-danger" : condition > 0 ? "text-success" : "";

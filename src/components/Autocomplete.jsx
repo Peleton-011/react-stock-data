@@ -1,11 +1,13 @@
 import React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { WatchListContext } from "../context/watchlistContext";
 import finnHub from "../apis/finnHub";
 
 const Autocomplete = () => {
 	const [search, setSearch] = useState("");
 	const [results, setResults] = useState([]);
+	const { addStock } = useContext(WatchListContext);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -41,7 +43,11 @@ const Autocomplete = () => {
 			}}
 		>
 			{results.map((result) => (
-				<li key={result.symbol} className="dropdown-item">
+				<li
+					key={result.symbol}
+					className="dropdown-item"
+					onClick={() => addStock(result.symbol)}
+				>
 					{result.description}{" "}
 					<span style={{ float: "right" }}>({result.symbol})</span>
 				</li>
