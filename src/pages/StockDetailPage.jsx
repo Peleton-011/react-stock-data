@@ -11,27 +11,32 @@ const StockDetailPage = () => {
 	const { symbol } = useParams();
 	useEffect(() => {
 		const fetchData = async () => {
-            const date = new Date();
-            //API needs it in seconds, getTime returns milliseconds
-            let currTime = Math.floor(date.getTime()/1000);
-            let dayInSeconds = 60 * 60 * 24
+			const date = new Date();
+			//API needs it in seconds, getTime returns milliseconds
+			let currTime = Math.floor(date.getTime() / 1000);
+			let dayInSeconds = 60 * 60 * 24;
 
-            switch (date.getDay()) {
-                case 0: 
-                    currTime -= 2*dayInSeconds;
-                    break;
-                case 6: 
-                    currTime -= dayInSeconds;
-                    break;
-                default:
-                    break;
-            }
+			switch (date.getDay()) {
+				case 0:
+					currTime -= 2 * dayInSeconds;
+					break;
+				case 6:
+					currTime -= dayInSeconds;
+					break;
+				default:
+					break;
+			}
 
 			const res = await finnHub.get("/stock/candle", {
-				params: { symbol: symbol, from: currTime - dayInSeconds, to: currTime, resolution: 30 },
+				params: {
+					symbol: symbol,
+					from: currTime - dayInSeconds,
+					to: currTime,
+					resolution: 30,
+				},
 			});
 
-            console.log(res)
+			console.log(res);
 		};
 		try {
 			fetchData();
