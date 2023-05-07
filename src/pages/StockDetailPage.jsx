@@ -14,7 +14,9 @@ const StockDetailPage = () => {
 			const date = new Date();
 			//API needs it in seconds, getTime returns milliseconds
 			let currTime = Math.floor(date.getTime() / 1000);
-			let dayInSeconds = 60 * 60 * 24;
+			const dayInSeconds = 60 * 60 * 24;
+			const weekInSeconds = 7 * dayInSeconds;
+			const yearInSeconds = 365 * dayInSeconds;
 
 			switch (date.getDay()) {
 				case 0:
@@ -27,22 +29,29 @@ const StockDetailPage = () => {
 					break;
 			}
 
-			const res = await finnHub.get("/stock/candle", {
-				params: {
-					symbol: symbol,
-					from: currTime - dayInSeconds,
-					to: currTime,
-					resolution: 30,
-				},
-			});
+			const getRes = (span, res) => {
+				return finnHub.get("/stock/candle", {
+					params: {
+						symbol: symbol,
+						from: currTime - span,
+						to: currTime,
+						resolution: res,
+					},
+				});
+			};
+			try {
+				const responses = await Promise.all([
+					getRes(dayInSeconds, 30),
+					getRes(weekInSeconds, 60),
+					getRes(yearInSeconds, "W"), //(use "D" for daily datapoints)
+				]);
 
-			console.log(res);
+				console.log(responses);
+			} catch (error) {
+				console.warn(error.message);
+			}
 		};
-		try {
-			fetchData();
-		} catch (error) {
-			console.warn(error.message);
-		}
+		fetchData();
 	}, []);
 
 	return <div>stockDetailPage for {symbol}</div>;
