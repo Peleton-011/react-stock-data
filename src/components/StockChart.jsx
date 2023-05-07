@@ -55,6 +55,16 @@ const StockChart = ({ chartData, symbol }) => {
 		},
 	];
 
+	const getButton = (val) => (
+		<button
+			key={val}
+			className="btn btn-outline-primary"
+			onClick={() => setDateFormat(val)}
+		>
+			{val}
+		</button>
+	);
+
 	return (
 		<section
 			style={{ width: "100%" }}
@@ -62,9 +72,9 @@ const StockChart = ({ chartData, symbol }) => {
 		>
 			<Chart options={options} series={series} type="area" width="100%" />
 			<div>
-				<button onClick={() => setDateFormat("24h")}>24h</button>
-				<button onClick={() => setDateFormat("7d")}>7d</button>
-				<button onClick={() => setDateFormat("1y")}>1y</button>
+				{["24h", "7d", "1y"].map((val) => {
+					return getButton(val);
+				})}
 			</div>
 		</section>
 	);
