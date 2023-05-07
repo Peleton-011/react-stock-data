@@ -48,7 +48,7 @@ const fetchAllData = async (symbols) => {
 const StockList = () => {
 	const [stocks, setStocks] = useState([]);
 
-	const { watchList } = useContext(WatchListContext);
+	const { watchList, removeStock } = useContext(WatchListContext);
 
 	const nav = useNavigate();
 
@@ -77,9 +77,15 @@ const StockList = () => {
 	};
 	// fetchAllData(watchList);
 
-	const getRemoveButton = () => {
+	const getRemoveButton = (stock) => {
 		return (
-			<button className="btn btn-danger btn-sn ml-3 d-inline-block delete-button">
+			<button
+				onClick={(e) => {
+					e.stopPropagation();
+					removeStock(stock);
+				}}
+				className="btn btn-danger btn-sn ml-3 d-inline-block delete-button"
+			>
 				Delete
 			</button>
 		);
@@ -120,7 +126,7 @@ const StockList = () => {
 							<td>{data.o}</td>
 							<td>
 								{data.pc}
-								{getRemoveButton()}
+								{getRemoveButton(stock)}
 							</td>
 						</tr>
 					))}
