@@ -116,10 +116,6 @@ const StockDetailPage = () => {
 						type="checkbox"
 						onChange={(e) => {
 							setIsCandleStick(e.target.checked);
-							console.log(
-								"Switch has been switched to ",
-								e.target.checked
-							);
 						}}
 					/>
 					<span className="slider"></span>
