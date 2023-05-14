@@ -85,8 +85,8 @@ const StockChart = ({ chartData, symbol, getToggle, type }) => {
 
 	return (
 		<section
-			style={{ width: "100%", height: "80%" }}
-			className="mt-5 p-4 shadow-sn bg-white"
+			style={{ width: "100%", height: "80%", marginTop: "5rem"}}
+			className=" p-4 shadow-sn bg-white"
 		>
 			{type ? (
 				<Chart
