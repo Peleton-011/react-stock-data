@@ -12,38 +12,40 @@ import Loading from "../components/Loading";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
-	const [chartData, setChartData] = useState();
+	const [chartAreaData, setChartAreaData] = useState();
+	const [chartCandleData, setChartCandleData] = useState();
 	const [isCandleStick, setIsCandleStick] = useState(false);
 
-	const formatData = (data) => {
-		const to2decimals = (number) => Math.floor(number * 100) / 100;
+	const to2decimals = (number) => Math.floor(number * 100) / 100;
+
+	const formatCandleData = (data) => {
 		const timestamps = data.t;
 		const closingPrices = data.c;
 
-		if (!isCandleStick) {
-			const result = closingPrices.map((price, index) => {
-				return {
-					x: timestamps[index] * 1000,
-					y: to2decimals(price),
-				};
-			});
-			return result;
-		}
 		const openPrices = data.o;
 		const highPrices = data.h;
 		const lowPrices = data.l;
 
-		const result = timestamps.map((timestamp, index) => {
-			return {
-				x: timestamp * 1000,
-				y: [
-					to2decimals(openPrices[index]),
-					highPrices[index],
-					lowPrices[index],
-					to2decimals(closingPrices[index]),
-				],
-			};
-		});
+		const result = timestamps.map((timestamp, index) => ({
+			x: timestamp * 1000,
+			y: [
+				to2decimals(openPrices[index]),
+				highPrices[index],
+				lowPrices[index],
+				to2decimals(closingPrices[index]),
+			],
+		}));
+		return result;
+	};
+
+	const formatAreaData = (data) => {
+		const timestamps = data.t;
+		const closingPrices = data.c;
+
+		const result = closingPrices.map((price, index) => ({
+			x: timestamps[index] * 1000,
+			y: to2decimals(price),
+		}));
 		return result;
 	};
 
@@ -85,10 +87,10 @@ const StockDetailPage = () => {
 				]);
 
 				const [day, week, year] = responses.map((res) =>
-					formatData(res.data)
+					formatAreaData(res.data)
 				);
 
-				setChartData({
+				setChartAreaData({
 					day,
 					week,
 					year,
@@ -125,22 +127,22 @@ const StockDetailPage = () => {
 
 	return (
 		<>
-			{chartData && isCandleStick ? (
+			{chartAreaData && isCandleStick ? (
 				<div style={{ width: "100%" }}>
 					<StockChart
 						type="candlestick"
 						symbol={symbol}
-						chartData={chartData}
+						chartData={chartAreaData}
 						getToggle={getToggle}
 					/>
 					<StockData symbol={symbol} />
 				</div>
-			) : chartData && !isCandleStick ? (
+			) : chartAreaData && !isCandleStick ? (
 				<div style={{ width: "100%" }}>
 					<StockChart
 						type="area"
 						symbol={symbol}
-						chartData={chartData}
+						chartData={chartAreaData}
 						getToggle={getToggle}
 					/>
 					<StockData symbol={symbol} />
