@@ -86,21 +86,28 @@ const StockDetailPage = () => {
 					getRes(yearInSeconds, "W"), //(use "D" for daily datapoints)
 				]);
 
-				const [day, week, year] = responses.map((res) =>
-					formatAreaData(res.data)
-				);
+				const [day, week, year] = responses.map((res) => ({
+					area: formatAreaData(res.data),
+					candle: formatCandleData(res.data),
+				}));
 
 				setChartAreaData({
-					day,
-					week,
-					year,
+					day: day.area,
+					week: week.area,
+					year: year.area,
 				});
+
+                setChartCandleData({
+                    day: day.candle,
+					week: week.candle,
+					year: year.candle,
+                })
 			} catch (error) {
 				console.warn(error.message);
 			}
 		};
 		fetchData();
-	}, [symbol, isCandleStick]);
+	}, [symbol]);
 
 	const getToggle = () => {
 		return (
@@ -127,18 +134,19 @@ const StockDetailPage = () => {
 
 	return (
 		<>
-			{chartAreaData && isCandleStick ? (
+			{chartCandleData && isCandleStick ? (
 				<div style={{ width: "100%" }}>
 					<StockChart
 						type="candlestick"
 						symbol={symbol}
-						chartData={chartAreaData}
+						chartData={chartCandleData}
 						getToggle={getToggle}
 					/>
 					<StockData symbol={symbol} />
 				</div>
 			) : chartAreaData && !isCandleStick ? (
 				<div style={{ width: "100%" }}>
+                    <div></div> {/*This makes no sense, but it makes the charts update properly*/}
 					<StockChart
 						type="area"
 						symbol={symbol}
