@@ -2,24 +2,25 @@ import React from "react";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
-const StockChart = ({ chartData, symbol, getToggle, type}) => {
+const StockChart = ({ chartData, symbol, getToggle, type }) => {
 	const { day, week, year } = chartData;
 
 	const [dateFormat, setDateFormat] = useState("24h");
 
-	const getDataByTimeFormat = () => {
+	const getDataByTimeFormat = (type) => {
+		const key = type ? "candle" : "area";
 		switch (dateFormat) {
 			case "24h":
-				return day;
+				return day[key];
 				break;
 			case "7d":
-				return week;
+				return week[key];
 				break;
 			case "1y":
-				return year;
+				return year[key];
 				break;
 			default:
-				return day;
+				return day[key];
 		}
 	};
 
@@ -33,7 +34,7 @@ const StockChart = ({ chartData, symbol, getToggle, type}) => {
 	};
 
 	const options = {
-		colors: [chartColor(getDataByTimeFormat())],
+		colors: [chartColor(getDataByTimeFormat(type))],
 		title: {
 			text: symbol,
 			align: "center",
@@ -61,7 +62,7 @@ const StockChart = ({ chartData, symbol, getToggle, type}) => {
 	const series = [
 		{
 			name: symbol,
-			data: getDataByTimeFormat(),
+			data: getDataByTimeFormat(type),
 		},
 	];
 
@@ -87,14 +88,29 @@ const StockChart = ({ chartData, symbol, getToggle, type}) => {
 			style={{ width: "100%", height: "80%" }}
 			className="mt-5 p-4 shadow-sn bg-white"
 		>
-			<Chart
-				options={options}
-				series={series}
-				type={type}
-				width="100%"
-				height="80%"
-				style={{ height: "80vh" }}
-			/>
+			{type ? (
+				<Chart
+					options={options}
+					series={series}
+					type={"candlestick"}
+					width="100%"
+					height="80%"
+					style={{ height: "80vh" }}
+				/>
+			) : (
+				<>
+					<div></div>
+					<Chart
+						options={options}
+						series={series}
+						type={"area"}
+						width="100%"
+						height="80%"
+						style={{ height: "80vh" }}
+					/>
+				</>
+			)}
+
 			<div
 				style={{
 					display: "flex",

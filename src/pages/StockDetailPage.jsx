@@ -12,8 +12,7 @@ import Loading from "../components/Loading";
 
 const StockDetailPage = () => {
 	const { symbol } = useParams();
-	const [chartAreaData, setChartAreaData] = useState();
-	const [chartCandleData, setChartCandleData] = useState();
+	const [chartData, setChartData] = useState();
 	const [isCandleStick, setIsCandleStick] = useState(false);
 
 	const to2decimals = (number) => Math.floor(number * 100) / 100;
@@ -91,17 +90,11 @@ const StockDetailPage = () => {
 					candle: formatCandleData(res.data),
 				}));
 
-				setChartAreaData({
-					day: day.area,
-					week: week.area,
-					year: year.area,
+				setChartData({
+					day,
+					week,
+					year,
 				});
-
-                setChartCandleData({
-                    day: day.candle,
-					week: week.candle,
-					year: year.candle,
-                })
 			} catch (error) {
 				console.warn(error.message);
 			}
@@ -123,6 +116,10 @@ const StockDetailPage = () => {
 						type="checkbox"
 						onChange={(e) => {
 							setIsCandleStick(e.target.checked);
+							console.log(
+								"Switch has been switched to ",
+								e.target.checked
+							);
 						}}
 					/>
 					<span className="slider"></span>
@@ -134,23 +131,12 @@ const StockDetailPage = () => {
 
 	return (
 		<>
-			{chartCandleData && isCandleStick ? (
+			{chartData ? (
 				<div style={{ width: "100%" }}>
 					<StockChart
-						type="candlestick"
+						type={isCandleStick}
 						symbol={symbol}
-						chartData={chartCandleData}
-						getToggle={getToggle}
-					/>
-					<StockData symbol={symbol} />
-				</div>
-			) : chartAreaData && !isCandleStick ? (
-				<div style={{ width: "100%" }}>
-                    <div></div> {/*This makes no sense, but it makes the charts update properly*/}
-					<StockChart
-						type="area"
-						symbol={symbol}
-						chartData={chartAreaData}
+						chartData={chartData}
 						getToggle={getToggle}
 					/>
 					<StockData symbol={symbol} />
